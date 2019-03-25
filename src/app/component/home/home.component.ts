@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, AfterContentChecked, AfterContentInit, AfterViewInit {
 
+  public clickNum:number=0;
+
   constructor(
     public router: Router
   ) {
@@ -44,5 +46,24 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   //跳转新页面
   openAbout() {
     this.router.navigateByUrl('appAbout');
+  }
+
+  //同一组件同时绑定单击和双击事件处理方法
+  //鼠标单击
+  singleClick(){
+    this.clickNum++;
+    setTimeout(()=>{
+      if(this.clickNum==2){
+       this.doubleClick();
+      }else if(this.clickNum==1) {
+        console.log('点击事件');
+      }
+      this.clickNum=0;
+    },300)
+  }
+
+  //鼠标双击
+  doubleClick(){
+    console.log('双击事件')
   }
 }

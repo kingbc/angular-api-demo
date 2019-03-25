@@ -22,4 +22,15 @@ describe('AboutComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('this key have no value',()=>{
+    const value=component.testFun('1');
+    expect(value).toEqual('1')
+  });
+
+  it('this key have no value',()=>{
+    const value=component.testFun('5');
+    expect(value).toEqual('5')
+  })
+
 });

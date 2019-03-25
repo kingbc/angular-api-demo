@@ -95,6 +95,17 @@ export class AboutComponent implements OnInit, DoCheck, OnDestroy{
     },500)
 
   }
+  
+  testFun(key){
+    let str:string;
+    switch (key) {
+      case 1:str='1';break;
+      case 2:str='2';break;
+      case 3:str='3';break;
+      default:str='undefined';break;
+    }
+    return str;
+  }
 
   ngOnDestroy(): void {
     clearInterval(this.timer1);
