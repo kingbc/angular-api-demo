@@ -1,4 +1,4 @@
-import {Component, OnInit, DoCheck, OnDestroy} from '@angular/core';
+import {Component, OnInit, DoCheck, OnDestroy, NgZone} from '@angular/core';
 
 @Component({
   selector: 'app-about',
@@ -11,9 +11,17 @@ export class AboutComponent implements OnInit, DoCheck, OnDestroy{
   newName: any;
   timer1:any;
   timer2:any;
+  timer3:any;
 
-  constructor() {
+  constructor(
+    public zone:NgZone
+  ) {
     this.fun1();
+
+    // angular之外执行方法，当angular所有方法执行结束之后，此处执行方法不会渲染视图
+    this.zone.runOutsideAngular(()=>{
+      this.zoneFun()
+    })
   }
 
   ngOnInit() {
@@ -28,8 +36,11 @@ export class AboutComponent implements OnInit, DoCheck, OnDestroy{
     }
   }
 
-  ojbk() {
-    this.newName = 123;
+  //重新执行zoneFun()方法
+  zoneRunFun() {
+    this.zone.run(()=>{
+      this.zoneFun()
+    })
   }
 
   // 异步处理
@@ -41,7 +52,7 @@ export class AboutComponent implements OnInit, DoCheck, OnDestroy{
         this.timer1 = setInterval(() => {
           i++;
           console.log(`fun2:${i}`);
-          if (i == 20) {
+          if (i == 5) {
             resolve(i);
             clearInterval(this.timer1);
           }
@@ -55,7 +66,7 @@ export class AboutComponent implements OnInit, DoCheck, OnDestroy{
         this.timer2 = setInterval(() => {
           b++;
           console.log(`fun3:${b}`);
-          if (b == 10) {
+          if (b ==5) {
             resolve(b);
             clearInterval(this.timer2);
           }
@@ -69,6 +80,20 @@ export class AboutComponent implements OnInit, DoCheck, OnDestroy{
     let num2=await fun2();
     let num3=await fun3();
     console.log(num2,num3)
+  }
+
+  //ngZone
+  zoneFun(){
+    let num=0;
+    this.timer3=setInterval(()=>{
+      this.name=Math.random().toString();
+      num++;
+      console.log(num);
+      if (num>100){
+        clearInterval(this.timer3)
+      }
+    },500)
+
   }
 
   ngOnDestroy(): void {
