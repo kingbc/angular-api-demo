@@ -1,16 +1,16 @@
-import {Component, OnInit, DoCheck} from '@angular/core';
-import {async} from "rxjs/internal/scheduler/async";
-import {__await} from "tslib";
+import {Component, OnInit, DoCheck, OnDestroy} from '@angular/core';
 
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.less']
 })
-export class AboutComponent implements OnInit, DoCheck {
+export class AboutComponent implements OnInit, DoCheck, OnDestroy{
 
   name = '123';
   newName: any;
+  timer1:any;
+  timer2:any;
 
   constructor() {
     this.fun1();
@@ -20,6 +20,7 @@ export class AboutComponent implements OnInit, DoCheck {
     console.log('onInit')
   }
 
+  // 变量监听
   ngDoCheck(): void {
     if (this.name == '张三') {
       console.log('正确');
@@ -31,36 +32,37 @@ export class AboutComponent implements OnInit, DoCheck {
     this.newName = 123;
   }
 
+  // 异步处理
   async fun1() {
 
     let fun2=()=>{
       return new Promise(resolve => {
         let i:number = 0;
-        let timer1 = setInterval(() => {
+        this.timer1 = setInterval(() => {
           i++;
           console.log(`fun2:${i}`);
           if (i == 20) {
             resolve(i);
-            clearInterval(timer1);
+            clearInterval(this.timer1);
           }
-        }, 200)
+        }, 100)
       })
 
-    }
+    };
     let fun3=()=>{
       return new Promise(resolve => {
         let b:number = 0;
-        let timer2 = setInterval(() => {
+        this.timer2 = setInterval(() => {
           b++;
           console.log(`fun3:${b}`);
           if (b == 10) {
             resolve(b);
-            clearInterval(timer2);
+            clearInterval(this.timer2);
           }
-        }, 1000)
+        }, 200)
       })
 
-    }
+    };
 
 
 
@@ -69,5 +71,9 @@ export class AboutComponent implements OnInit, DoCheck {
     console.log(num2,num3)
   }
 
+  ngOnDestroy(): void {
+    clearInterval(this.timer1);
+    clearInterval(this.timer2);
+  }
 
 }
