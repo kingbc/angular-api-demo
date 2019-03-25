@@ -16,24 +16,24 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   }
 
   ngOnInit() {
-    console.log('组件--home被选定，最早执行')
+    console.log('组件--home被选定，ngOnInit')
   }
 
   ngAfterContentInit(): void {
-    console.log('组件--home被选定，早于contentChecked执行')
+    console.log('组件--home被选定，ngAfterContentInit早于contentChecked执行')
   }
 
   ngAfterContentChecked(): void {
-    console.log('组件--home被选定，早于ViewInit执行')
+    console.log('组件--home被选定，ngAfterContentChecked早于ViewInit执行')
   }
 
   ngAfterViewInit(): void {
-    console.log('组件--home被选定，早于ViewChecked执行')
+    console.log('组件--home被选定，ngAfterViewInit早于ViewChecked执行')
   }
 
   // 组件被选定时执行的方法
   ngAfterViewChecked(): void {
-    console.log('组件--home被选定，晚于ViewInit执行')
+    console.log('组件--home被选定，ngAfterViewChecked晚于ViewInit执行')
   }
 
   // 组件被销毁时执行的方法
