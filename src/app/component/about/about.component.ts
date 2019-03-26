@@ -39,6 +39,7 @@ export class AboutComponent implements OnInit, DoCheck, OnDestroy{
   //重新执行zoneFun()方法
   zoneRunFun() {
     this.zone.run(()=>{
+      clearInterval(this.timer3);
       this.zoneFun()
     })
   }
